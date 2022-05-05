@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@lib/*": ["lib/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -14,6 +19,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["types/**/*.ts", "**/*.ts", "**/*.tsx", "src/pages/Table.js"],
   "exclude": ["node_modules"]
 }
