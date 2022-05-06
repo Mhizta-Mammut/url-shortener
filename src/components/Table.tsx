@@ -20,6 +20,8 @@ import {
 } from "react-table"
 import { classNames } from "@src/components/utils"
 import { SortDownIcon, SortIcon, SortUpIcon } from "@src/components/Icons"
+import { RiAddLine } from "react-icons/ri"
+import Link from "next/link"
 
 export type TableInstanceWithHooks<T extends object> = TableInstance<T> &
   UsePaginationInstanceProps<T> &
@@ -43,10 +45,10 @@ export function SelectColumnFilter({
   }, [id, preFilteredRows])
 
   return (
-    <label className="flex gap-x-2 items-baseline">
+    <label className="flex items-baseline gap-x-2">
       <span className="text-gray-700">{render("Header")}: </span>
       <select
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         name={id}
         id={id}
         value={filterValue}
@@ -77,12 +79,12 @@ function GlobalFilter({
   }, 200)
 
   return (
-    <label className="flex gap-x-2 items-baseline">
+    <label className="flex items-baseline gap-x-2">
       <span className="text-gray-700">Search: </span>
       <input
         type="text"
         value={value || ""}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         onChange={(e) => {
           setValue(e.target.value)
           onChange(e.target.value)
@@ -113,9 +115,9 @@ export function StatusPill({ value }: any) {
 export function AvatarCell({ value, column, row }: any) {
   return (
     <div className="flex items-center">
-      <div className="flex-shrink-0 h-10 w-10">
+      <div className="flex-shrink-0 w-10 h-10">
         <img
-          className="h-10 w-10 rounded-full"
+          className="w-10 h-10 rounded-full"
           src={row.original[column.imgAccessor]}
           alt=""
         />
@@ -162,7 +164,7 @@ function Table({ columns, data }: any) {
   )
   return (
     <>
-      <div className="flex gap-x-2">
+      <div className="flex justify-between gap-x-2">
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
@@ -179,12 +181,22 @@ function Table({ columns, data }: any) {
             ) : null
           )
         )}
+
+        <a
+          href={`/new-link`}
+          className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+        >
+          New Entry
+        </a>
       </div>
 
-      <div className="mt-2 flex flex-col">
-        <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <div className="flex flex-col mt-2">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
               <table
                 {...getTableProps()}
                 className="min-w-full divide-y divide-gray-200"
@@ -195,7 +207,7 @@ function Table({ columns, data }: any) {
                       {headerGroup.headers.map((column) => (
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                           {...column.getHeaderProps(
                             column.getSortByToggleProps()
                           )}
@@ -256,8 +268,8 @@ function Table({ columns, data }: any) {
       </div>
 
       {/* Pagination */}
-      <div className="py-3 flex items-center justify-between">
-        <div className="flex-1 flex justify-between sm:hidden">
+      <div className="flex items-center justify-between py-3">
+        <div className="flex justify-between flex-1 sm:hidden">
           <Button
             className={""}
             onClick={() => previousPage()}
@@ -282,7 +294,7 @@ function Table({ columns, data }: any) {
             <label>
               <span className="sr-only">Items Per Page</span>
               <select
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 value={state.pageSize}
                 onChange={(e) => {
                   setPageSize(Number(e.target.value))
@@ -298,7 +310,7 @@ function Table({ columns, data }: any) {
           </div>
           <div>
             <nav
-              className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+              className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
               aria-label="Pagination"
             >
               <PageButton
@@ -307,7 +319,7 @@ function Table({ columns, data }: any) {
                 disabled={!canPreviousPage}
               >
                 <span className="sr-only">First</span>
-                <ChevronDoubleLeftIcon className="h-5 w-5" aria-hidden="true" />
+                <ChevronDoubleLeftIcon className="w-5 h-5" aria-hidden="true" />
               </PageButton>
               <PageButton
                 className={""}
@@ -315,7 +327,7 @@ function Table({ columns, data }: any) {
                 disabled={!canPreviousPage}
               >
                 <span className="sr-only">Previous</span>
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
               </PageButton>
               <PageButton
                 className={""}
@@ -323,7 +335,7 @@ function Table({ columns, data }: any) {
                 disabled={!canNextPage}
               >
                 <span className="sr-only">Next</span>
-                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
               </PageButton>
               <PageButton
                 className="rounded-r-md"
@@ -332,7 +344,7 @@ function Table({ columns, data }: any) {
               >
                 <span className="sr-only">Last</span>
                 <ChevronDoubleRightIcon
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                   aria-hidden="true"
                 />
               </PageButton>

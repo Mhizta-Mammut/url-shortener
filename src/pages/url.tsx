@@ -94,12 +94,8 @@ const Page: NextPage = ({ data }: any) => {
         <title>Url Shortener</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container flex flex-row px-6 mx-auto">
-        <div className="items-center justify-center w-full max-w-lg p-6 bg-white rounded-md ">
-          <h1 className="text-2xl font-semibold">URL Shortener</h1>
-          <AddLink id={id} setId={setId} />
-        </div>
-        <div className="max-w-3xl p-5">
+      <div className="container px-6 mx-auto">
+        <div className="max-w-full p-5">
           <Table columns={columns} data={data} />
         </div>
       </div>
